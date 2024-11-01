@@ -24,9 +24,19 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
+      - name: Set up remark configuration
+        run: |
+          echo '{
+            "plugins": [
+              "remark-preset-lint-consistent",
+              ["remark-lint-emphasis-marker", "_"]
+            ]
+          }' > .remarkrc
+      
       - name: Run markdown lint
         run: |
           npm install remark-cli remark-preset-lint-consistent remark-lint-emphasis-marker
-          npx remark . --use remark-preset-lint-consistent --use "remark-lint-emphasis-marker"="_" --frail
+          npx remark . --frail
+
 
 
